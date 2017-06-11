@@ -1,5 +1,6 @@
 TODO:
 - Auth different pages
+- Cashier feature
 
 ERROR:
 
@@ -12,7 +13,6 @@ BUG:
 - pagination $user as $users ?
 
 AFTER:
-- Food page all function
 - Auth roles
 - Add photo profile
 - Change profile (photo, password, info)
