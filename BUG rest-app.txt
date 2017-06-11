@@ -1,0 +1,18 @@
+TODO:
+- Auth different pages
+
+ERROR:
+
+BUG:
+- form wont autofocus
+- search query result
+- validasi add / update data -> user & food
+- user & food data update -> option form
+- add user password still like auth ?
+- pagination $user as $users ?
+
+AFTER:
+- Food page all function
+- Auth roles
+- Add photo profile
+- Change profile (photo, password, info)
