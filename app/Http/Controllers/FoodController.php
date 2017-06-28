@@ -30,17 +30,18 @@ class FoodController extends Controller
         return view('food/index', ['food'=>$foods]);
     }
 
-    public function create()
+    public function store(Request $request)
     {
-      return view ('/food/create');
-    }
+      $this->validate($request, [
+        'name' => 'required',
+        'price' => 'required',
+        'status' => 'required',
+      ]);
 
-    public function store(Request $foods)
-    {
       Food::create([
-          'name' => $foods['name'],
-          'price' => $foods['price'],
-          'status' => $foods['status'],
+          'name' => $request['name'],
+          'price' => $request['price'],
+          'status' => $request['status'],
       ]);
       return redirect('food');
     }
@@ -62,6 +63,12 @@ class FoodController extends Controller
 
     public function update(Request $request, $id)
     {
+      $this->validate($request, [
+        'name' => 'required',
+        'price' => 'required',
+        'status' => 'required',
+      ]);
+
       $foods = Food::find($id);
       $foods->name = $request->name;
       $foods->price = $request->price;

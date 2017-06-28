@@ -7,6 +7,18 @@
         <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/$users->id') }}">
             {{ csrf_field() }}
 
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <img src="/uploads/avatars/{{ $users->avatar }}" alt="Avatar" class="img-thumbnail avatar">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <a class="btn btn-primary btn-sm" href="/user/{{$users->id}}/profile">Change photo</a>
+              </div>
+            </div>
+
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -71,7 +83,11 @@
                     </button> -->
                     <div class=" pull-right">
                       <a class="btn btn-primary" href="edit"><i class="fa fa-wrench" aria-hidden="true"></i> Edit</a>
+                      @if ( $users->id == Auth::user()->id)
+                        <a class="btn btn-default" href="/user/{{$users->id}}/setting">Change password</a>
+                      @else
                       <a class="btn btn-danger" href="delete"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                      @endif
                     </div>
                 </div>
             </div>
@@ -79,7 +95,6 @@
             <input type="hidden" name="_method" value="PUT">
 
         </form>
-
     </div>
 </div>
 @endsection

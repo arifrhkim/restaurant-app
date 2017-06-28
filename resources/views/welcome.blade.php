@@ -93,11 +93,11 @@
         </div>
 
         <script>
-          var countDownDate = new Date("Jun 25, 2017 00:00:00").getTime();
+          var countDownDate = new Date("Jul 1, 2017 00:00:00").getTime();
           var now = new Date().getTime();
           var distance = countDownDate - now;
           var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          document.getElementById("d-d").innerHTML = days + " Day - Eid";
+          document.getElementById("d-d").innerHTML = days + " Day - July";
           if (distance < 0) {
             document.getElementById("d-d").innerHTML = "EXPIRED";
           }

@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Image;
 
 class UserController extends Controller
 {
@@ -24,30 +27,28 @@ class UserController extends Controller
 
     public function index()
     {
-
+      $users=User::paginate(10);
+      return view('admin/index', ['user'=>$users]);
     }
 
-    public function create()
+    public function store(Request $request)
     {
-      return view ('/admin/create');
-    }
+      $this->validate($request, [
+        'name' => 'required|max:255',
+        'username' => 'required|min:6|max:25|unique:users',
+        'email' => 'required|email|max:255|unique:users',
+        'password' => 'required|min:6|confirmed',
+        'roles' => 'required',
+      ]);
 
-    public function store(Request $users)
-    {
       User::create([
-          'name' => $users['name'],
-          'username' => $users['username'],
-          'email' => $users['email'],
-          'password' => bcrypt($users['password']),
-          'roles' => $users['roles'],
+          'name' => $request['name'],
+          'username' => $request['username'],
+          'email' => $request['email'],
+          'password' => bcrypt($request['password']),
+          'roles' => $request['roles'],
       ]);
       return redirect('home');
-    }
-
-    public function cashier()
-    {
-      $users=User::where('roles', 'cashier')->get();
-      return view ('admin/index', ['users'=>$users]);
     }
 
     public function show($id)
@@ -56,6 +57,7 @@ class UserController extends Controller
       if (!$users) {
         abort(404);
       }
+      // return view('admin/single', array('user' => Auth::user()) );
       return view ('admin/single', ['users'=>$users]);
     }
 
@@ -67,19 +69,81 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+      $this->validate($request, [
+        'name' => 'required|max:255',
+        'username' => 'required|min:6|max:25|unique:users,id,'.$request->get('id'),
+        'email' => 'required|email|max:255|unique:users,id,'.$request->get('id'),
+        'roles' => 'required',
+      ]);
+
       $users = User::find($id);
       $users->name = $request->name;
       $users->username = $request->username;
       $users->email = $request->email;
       $users->roles = $request->roles;
-      $users->save();
+      $users->update();
       return redirect('home');
     }
 
     public function destroy($id)
     {
       User::find($id)->delete();
-      return redirect('home');
+      return redirect('user');
+    }
+
+    public function customers()
+    {
+      $users=User::where('roles', 'User')->paginate(10);
+      return view('admin/customers', ['user'=>$users]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // return dd($request->current_password);
+
+        // Check current password
+        if (!\Hash::check($request->input('current_password'), Auth::user()->password))
+        {
+            $error = array('current-password' => trans('Password is different'));
+            return redirect()->back()->withErrors($error)->withInput();
+        }
+
+        $this->validate($request, [
+          'password' => 'required|min:6|confirmed',
+        ]);
+
+        // Save new password
+        $request->user()->fill([
+            'password' => \Hash::make($request->input('password'))
+        ])->save();
+
+        return redirect('user');
+    }
+
+    public function showProfile($id)
+    {
+      $users=User::find($id);
+      if (!$users) {
+        abort(404);
+      }
+      return view ('admin/profile', ['users'=>$users]);
+    }
+
+    public function updateAvatar(Request $request){
+
+    	// Handle the user upload of avatar
+    	if($request->hasFile('avatar')){
+    		$avatar = $request->file('avatar');
+    		$filename = time() . '.' . $avatar->getClientOriginalExtension();
+    		Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
+
+    		$user = Auth::user();
+    		$user->avatar = $filename;
+    		$user->save();
+    	}
+
+    	return view ('admin/single', ['users'=>$user]);
+
     }
 
 }
