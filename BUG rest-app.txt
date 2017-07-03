@@ -16,8 +16,7 @@ BUG & FIX:
 STRANGE:
 - add user password still like auth ?
 - pagination $user as $users ?
+- remember me ?
 
 AFTER:
-- password through email, forget password
-- remember me
 - Mobile web apps

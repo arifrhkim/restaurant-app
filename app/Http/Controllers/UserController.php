@@ -117,7 +117,8 @@ class UserController extends Controller
             'password' => \Hash::make($request->input('password'))
         ])->save();
 
-        return redirect('user');
+        return redirect()->action('UserController@show', ['id' => Auth::user()->id])
+        ->with('status', 'Password changed!');
     }
 
     public function showProfile($id)

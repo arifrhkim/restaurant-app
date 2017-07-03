@@ -1,6 +1,13 @@
 @extends('layouts.app-side')
 
 @section('content')
+
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
 <div class="panel panel-default">
     <div class="panel-heading">Detail information</div>
     <div class="panel-body">
