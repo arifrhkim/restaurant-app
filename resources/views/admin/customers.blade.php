@@ -2,44 +2,44 @@
 
 @section('content')
 
-<form class="form-inline" action="{{ url('query-food') }}" method="GET">
+<form class="form-inline" action="{{ url('query') }}" method="GET">
   <div class="form-group pull-right">
     <input type="text" class="validate form-control" name="q" placeholder="Search" value="{{ old('q') }}">
     <button type="submit" class="btn btn-default">Search</button>
   </div>
-  <a class="btn btn-default" href="/food/create"><i class="fa fa-plus" aria-hidden="true"></i> Add food</a>
+  <a class="btn btn-default" href="/user/create"><i class="fa fa-plus" aria-hidden="true"></i> Add user</a>
 </form> <br>
 
-@if (count($food))
+@if (count($user))
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    Food list
+    User list
   </div>
-
-  <!-- <div class="panel-body"></div> -->
 
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Status</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($food as $foods)
+          @foreach($user as $users)
           <tr>
             <td class="counterCell"></td>
-            <td>{{ $foods->name }}</td>
-            <td>{{ $foods->price }}</td>
-            <td>{{ $foods->status }}</td>
+            <td>{{ $users->name }}</td>
+            <td>{{ $users->username }}</td>
+            <td>{{ $users->email }}</td>
+            <td>{{ $users->roles }}</td>
             <td>
-              <a href="/food/{{ $foods->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-              <a href="/food/{{ $foods->id }}/edit" class="btn btn-xs btn-info"><i class="fa fa-wrench" aria-hidden="true"></i></a>
-              <a href="/food/{{ $foods->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a href="/user/{{ $users->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+              <a href="/user/{{ $users->id }}/edit" class="btn btn-xs btn-info"><i class="fa fa-wrench" aria-hidden="true"></i></a>
+              <a href="/user/{{ $users->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>
           @endforeach
@@ -49,7 +49,7 @@
 </div>
 
 <div class="pull-right">
-  {{ $food->links() }}
+  {{ $user->links() }}
 </div>
 
 @else

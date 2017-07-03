@@ -7,3 +7,19 @@ table {
     content: counter(tableCount);
     counter-increment: tableCount;
 }
+
+.panel, .btn, .form-control, .dropdown-menu, .nav-pills > li > a {
+  border-radius: 0;
+}
+
+.avatar {
+  width:150px;
+  height:150px;
+}
+.avatar-top {
+    width:32px;
+    height:32px;
+    top:10px;
+    border-radius:50%;
+    margin-right: 10px;
+}

@@ -14,7 +14,10 @@
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- ETC -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Scripts -->
     <script>
@@ -30,11 +33,11 @@
         <div class="container">
             <div class="row">
 
-              <div class="col-md-2">
+              <div class="col-md-2  col-md-offset-1">
                 @include('includes.sidebar')
               </div>
 
-              <div class="col-md-8 col-md-offset-1">
+              <div class="col-md-8">
                 @yield('content')
               </div>
 
@@ -45,5 +48,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+
 </body>
 </html>

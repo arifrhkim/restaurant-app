@@ -4,11 +4,18 @@
 <div class="container">
     <div class="row">
 
-      <div class="col-md-2">
+      <div class="col-md-2 col-md-offset-1">
         @include('includes.sidebar')
       </div>
 
-        <div class="col-md-8 col-md-offset-1">
+        <div class="col-md-8">
+
+          @if (session('status'))
+              <div class="alert alert-success">
+                  {{ session('status') }}
+              </div>
+          @endif
+
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -17,24 +24,24 @@
                 </div>
             </div>
 
-            <form class="form-inline" action="{{ url('query') }}" method="GET">
+            <!-- <form class="form-inline" action="{{ url('query') }}" method="GET">
               <div class="form-group">
                 <input type="text" class="validate form-control" name="q" placeholder="Search" value="">
               </div>
               <button type="submit" class="btn btn-default">Search</button>
-            </form>
+            </form> -->
 
-            @if (count($user))
+            <!-- @if (count($user)) -->
 
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default">
               <div class="panel-heading">
                 User list
                 <a class="btn btn-default btn-xs pull-right" href="/user/create"><i class="fa fa-plus" aria-hidden="true"></i> Add user</a>
-              </div>
+              </div> -->
 
               <!-- <div class="panel-body"></div> -->
 
-                  <table class="table table-bordered">
+                  <!-- <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -67,15 +74,15 @@
 
             <div class="pull-right">
               {{ $user->links() }}
-            </div>
+            </div> -->
 
-            @else
-               <div class="panel panel-default">
+            <!-- @else -->
+               <!-- <div class="panel panel-default">
                  <div class="panel-body">
                    Search result for '<b>{{$query}}</b>' not found.
                   </div>
-               </div>
-            @endif
+               </div> -->
+            <!-- @endif -->
 
         </div>
     </div>

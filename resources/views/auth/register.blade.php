@@ -74,20 +74,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Roles</label>
-
-                            <div class="col-md-6">
-                                <select class="form-control" name="roles">
-                                  <option value="Admin">Admin</option>
-                                  <option value="Cashier">Cashier</option>
-                                  <option value="Chef">Chef</option>
-                                  <option value="Waitress">Waitress</option>
-                                  <option value="User">User</option>
-                                </select>
-                            </div>
-                        </div> -->
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -95,6 +81,13 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="col-md-6 col-md-offset-4">
+                          <a href="/auth/facebook" class="btn btn-primary"> Facebook </a>
+                          <a href="/auth/twitter" class="btn btn-info"> Twitter </a>
+                          <a href="/auth/google" class="btn btn-danger"> Google </a>
+                        </div>
+
                     </form>
                 </div>
             </div>

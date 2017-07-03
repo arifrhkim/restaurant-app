@@ -1,18 +1,22 @@
 TODO:
-- Auth different pages
-- Cashier feature
+- Order feature
+- add cart
 
 ERROR:
+- store order
 
-BUG:
-- form wont autofocus
-- search query result
-- validasi add / update data -> user & food
+BUG & FIX:
+- data table -> datatables.net
+- search -> input old()
+- form won't autofocus
 - user & food data update -> option form
+- strech photo profile
+- validasi
+
+STRANGE:
 - add user password still like auth ?
 - pagination $user as $users ?
+- remember me ?
 
 AFTER:
-- Auth roles
-- Add photo profile
-- Change profile (photo, password, info)
+- Mobile web apps

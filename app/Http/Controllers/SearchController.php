@@ -33,7 +33,7 @@ class SearchController extends Controller
           ->orwhere('email', 'LIKE', '%' . $query . '%')
           ->orwhere('roles', 'LIKE', '%' . $query . '%')
           ->paginate(10);
-          return view('home', compact('user', 'query'));
+          return view('admin.index', compact('user', 'query'));
       }
 
       public function food(Request $request)

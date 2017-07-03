@@ -37,4 +37,9 @@ class User extends Authenticatable
     protected $dates = [
       'deleted_at',
     ];
+
+    function socialProvider()
+    {
+      return $this->hasMany(SocialProvider::class);
+    }
 }

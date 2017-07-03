@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\SocialProvider;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Socialite;
 
 class RegisterController extends Controller
 {
@@ -38,8 +40,6 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        // $this->middleware('auth')->roles='Admin';
-        // Auth::user()->roles='Admin';
     }
 
     /**
@@ -52,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'username' => 'required|max:25',
+            'username' => 'required|min:6|max:25|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             // 'roles' => 'required',
@@ -72,7 +72,54 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            // 'roles' => $data['roles'],
+            'roles' => 'User',
         ]);
+    }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback($provider)
+    {
+
+        try {
+          $socialUser = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+          return redirect('/');
+        }
+
+        $socialProvider = SocialProvider::where('provider_id', $socialUser->getId())->first();
+        if(!$socialProvider) {
+          // create new user
+          $user = User::firstOrCreate (
+            ['email' => $socialUser->getEmail()],
+            ['name' => $socialUser->getName()]
+          );
+
+          $user->SocialProvider()->create(
+            ['provider_id' => $socialUser->getId(), 'provider' => $provider]
+          );
+
+        } else {
+          $user = $socialProvider->user;
+        }
+
+        auth()->login($user);
+
+        return redirect('/home');
+
+        // $user->token;
     }
 }

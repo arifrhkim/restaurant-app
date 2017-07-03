@@ -49,6 +49,8 @@
                 </div>
             </div>
 
+            @if ( $users->id != Auth::user()->id)
+
             <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Roles</label>
 
@@ -64,6 +66,8 @@
                 </div>
             </div>
 
+            @endif
+
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                     <input type="hidden" name="_method" value="PUT">
@@ -72,7 +76,6 @@
                     <!-- </input> -->
                 </div>
             </div>
-
 
         </form>
 

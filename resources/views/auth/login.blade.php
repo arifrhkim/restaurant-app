@@ -60,6 +60,13 @@
                             </div>
                         </div>
                     </form>
+
+                    <div class="col-md-6 col-md-offset-4">
+                      <a href="/auth/facebook" class="btn btn-primary"> Facebook </a>
+                      <a href="/auth/twitter" class="btn btn-info"> Twitter </a>
+                      <a href="/auth/google" class="btn btn-danger"> Google </a>
+                    </div>
+
                 </div>
             </div>
         </div>
