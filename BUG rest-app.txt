@@ -1,22 +1,22 @@
 TODO:
-- Order feature
-- add cart
+- validasi
 
 ERROR:
-- store order
 
 BUG & FIX:
+- Order list: edit
 - data table -> datatables.net
 - search -> input old()
-- form won't autofocus
+
 - user & food data update -> option form
-- strech photo profile
-- validasi
+- strech photo profile & max size upload
+- amount order
 
 STRANGE:
 - add user password still like auth ?
 - pagination $user as $users ?
 - remember me ?
+- form won't autofocus ?
 
 AFTER:
-- Mobile web apps
+- Testing

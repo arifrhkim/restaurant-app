@@ -12,7 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return redirect('/login');
+  // return view('welcome');
+  // return view('landing');
 });
 
 Auth::routes();
@@ -55,14 +57,23 @@ Route::get('/food/{id}/delete', 'FoodController@destroy');
 
 # Order
 Route::get('/order', 'OrderController@index');
-Route::get('/order/create', 'OrderController@create');
-// Route::get('/order/create', function () {
-//     return view ('/order/create');
-// });
-Route::post('/order/store', 'OrderController@store');
-// Route::get('/order/{id}/addCart', 'OrderController@addCart');
+Route::get('/order/{id}/status', 'OrderController@status');
+Route::get('/order/{id}/statusDetail', 'OrderController@statusDetail');
 Route::get('/order/{id}/show', 'OrderController@show');
+Route::get('/order/{id}/delete', 'OrderController@destroy');
+Route::get('/order/{id}/print', 'OrderController@getPDF');
 
 # Social Lite
 Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
+
+# Menu
+Route::get('/menu', 'MenuController@indexMenu');
+Route::get('/cart/store', 'MenuController@storeCart');
+Route::get('/cart', 'MenuController@indexCart');
+Route::get('/cart/{id}/delete', 'MenuController@destroyCart');
+Route::get('/cart/destroy', 'MenuController@removeCart');
+Route::post('/cart/storeOrder', 'MenuController@storeOrder');
+Route::get('/cart/order', 'MenuController@orderShow');
+
+Route::get('/orderDetail/{id}/show', 'MenuController@showDetail');

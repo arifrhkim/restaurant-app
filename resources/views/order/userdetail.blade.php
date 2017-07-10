@@ -98,11 +98,11 @@
         <td>{{ $detail->quantity }}</td>
         <td>
           @if ($detail->status == 'Queued')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-warning">{{ $detail->status }}</a>
+            <span class="label label-warning">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Process')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-info">{{ $detail->status }}</a>
+            <span class="label label-info">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Served')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-primary">{{ $detail->status }}</a>
+            <span class="label label-primary">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Done')
             <span class="label label-default">{{ $detail->status }}</span>
           @else

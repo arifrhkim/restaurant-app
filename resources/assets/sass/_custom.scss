@@ -8,7 +8,8 @@ table {
     counter-increment: tableCount;
 }
 
-.panel, .btn, .form-control, .dropdown-menu, .nav-pills > li > a {
+.panel, .btn, .form-control, .dropdown-menu, .nav-pills > li > a, .modal-content,
+{
   border-radius: 0;
 }
 
@@ -20,6 +21,7 @@ table {
     width:32px;
     height:32px;
     top:10px;
+    right:100%;
     border-radius:50%;
-    margin-right: 10px;
+    position:absolute;
 }

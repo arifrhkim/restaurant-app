@@ -3,10 +3,10 @@
 @section('content')
 
 <form class="form-inline" action="{{ url('query-food') }}" method="GET">
-  <div class="form-group pull-right">
+  <!-- <div class="form-group pull-right">
     <input type="text" class="validate form-control" name="q" placeholder="Search" value="{{ old('q') }}">
     <button type="submit" class="btn btn-default">Search</button>
-  </div>
+  </div> -->
   <a class="btn btn-default" href="/food/create"><i class="fa fa-plus" aria-hidden="true"></i> Add food</a>
 </form> <br>
 

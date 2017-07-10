@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\detailOrder;
 use App\Models\Food;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Barryvdh\DomPDF\Facade as PDF;
 
 class OrderController extends Controller
 {
@@ -30,52 +31,124 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=DB::table('users')
-          ->join('orders', 'orders.customerID', '=', 'users.id')
-          ->paginate(5);
-        return view('/order/index', ['orders'=>$orders]);
+        if (Auth::user()->roles=='User') {
+          $orders=DB::table('users')
+            ->join('orders', 'orders.customerID', '=', 'users.id')
+            ->where([
+                  ['customerID', '=', Auth::user()->id],
+                  ['orders.deleted_at', '=', null ],
+              ])
+            ->paginate(10);
+            return view('/order/user', ['orders'=>$orders]);
+        } else {
+          $orders=DB::table('users')
+            ->join('orders', 'orders.customerID', '=', 'users.id')
+            ->where('orders.deleted_at', '=', null )
+            ->paginate(10);
+            return view('/order/index', ['orders'=>$orders]);
+        }
     }
 
-    public function create()
+    public function status($id)
     {
-        $foods=Food::where('status', 'Available')->get();
-        $cart = DB::table('detailorders')
-          ->join('foods', 'detailorders.foodID', '=', 'foods.id')
-          ->paginate(5);
-        return view('/order/create', ['food'=>$foods, 'cart' => $cart]);
+        $order = Order::find($id);
+        switch ($order->status) {
+          case 'Queued':
+            $order->status = 'Process';
+            break;
+
+          case 'Process':
+            $order->status = 'Served';
+            break;
+
+          case 'Served':
+            $order->status = 'Done';
+            break;
+
+          case 'Done':
+            // dd('Statusnya sudah Done');
+            break;
+
+          default:
+            // dd('Statusnya sudah Done');
+            break;
+        }
+        $order->save();
+
+        return redirect('/order');
     }
 
-    public function store(Request $request)
+    public function statusDetail($id)
     {
-      $this->validate($request, [
-        'tableID' => 'required',
-        'customerID' => 'required',
-      ]);
+        $order = detailorder::find($id);
+        switch ($order->status) {
+          case 'Queued':
+            $order->status = 'Process';
+            break;
 
-      dd($request);
+          case 'Process':
+            $order->status = 'Served';
+            break;
+
+          case 'Served':
+            $order->status = 'Done';
+            break;
+
+          case 'Done':
+            // dd('Statusnya sudah Done');
+            break;
+
+          default:
+            // dd('Statusnya sudah Done');
+            break;
+        }
+        $order->save();
+
+        return back();
     }
 
     public function show ($id)
     {
-      dd($id);
+      $details = DB::table('foods')
+        ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
+        ->where([
+          ['orderID', '=', $id],
+          ['orderBy', '=', Auth::user()->id],
+          ['detailorders.deleted_at', '=', null],
+        ])
+        ->get();
+        $order = Order::find($id);
+        if (Auth::user()->roles!='User') {
+          return view('/order/detail', ['details' => $details, 'order' => $order]);
+        } else {
+          return view('/order/userdetail', ['details' => $details, 'order' => $order]);
+        }
     }
 
-    // public function addCart($id)
-    // {
-    //   $foods=Food::where('status', 'Available')->paginate(10);
-    //   $order = Food::find($id);
-    //
-    //   DB::table('detailorder')->insert([
-    //     'foodID' => $order['id'],
-    //     'orderID' => (Auth::user()->id),
-    //     'quantity' => 1,
-    //     'subtotal' => 1,
-    //   ]);
-    //
-    //   // dd($id);
-    //   $cart= DB::table('detailorder')->get();
-    //
-    //   return view('/order/index', ['food'=>$foods, 'cart' => $cart ]);
-    // }
+    public function destroy($id)
+    {
+      Order::find($id)->delete();
+      return redirect('order');
+    }
+
+    public function getPDF ($id)
+    {
+      // dd($id);
+      $details = DB::table('foods')
+        ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
+        ->where([
+          ['orderID', '=', $id],
+          ['orderBy', '=', Auth::user()->id],
+          ['detailorders.deleted_at', '=', null],
+        ])
+        ->get();
+      $order = Order::find($id);
+
+      return view('order.pdf', ['details' => $details, 'order' => $order]);
+
+      // $pdf = PDF::loadView('order.pdf', ['details' => $details, 'order' => $order]);
+      // return $pdf->stream();
+
+    }
 
 }

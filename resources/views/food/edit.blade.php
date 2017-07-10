@@ -4,8 +4,20 @@
 <div class="panel panel-default">
     <div class="panel-heading">Detail information</div>
     <div class="panel-body">
-        <form class="form-horizontal" role="form" method="POST" action="/food/{{$foods->id}}">
+        <form enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="/food/{{$foods->id}}">
             {{ csrf_field() }}
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <img src="/uploads/foods/{{ $foods->foodPic }}" alt="Food" class="img-thumbnail avatar">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <input type="file" name="foodPic">
+              </div>
+            </div>
 
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-4 control-label">Name</label>
@@ -16,6 +28,20 @@
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                <label for="description" class="col-md-4 control-label">Description</label>
+
+                <div class="col-md-6">
+                    <textarea rows="3" id="description" type="text" class="form-control" name="description" required autofocus>{{ $foods->description }}</textarea>
+
+                    @if ($errors->has('description'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('description') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -54,7 +80,7 @@
                 </div>
             </div>
 
-            <input type="hidden" name="_method" value="PUT">
+            <!-- <input type="hidden" name="_method" value="PUT"> -->
 
         </form>
 
