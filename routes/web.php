@@ -58,9 +58,12 @@ Route::get('/food/{id}/delete', 'FoodController@destroy');
 # Order
 Route::get('/order', 'OrderController@index');
 Route::get('/order/{id}/status', 'OrderController@status');
+Route::get('/order/{id}/cancel', 'OrderController@cancel');
+Route::get('/order/{id}/cancelDtl', 'OrderController@cancelDtl');
 Route::get('/order/{id}/statusDetail', 'OrderController@statusDetail');
 Route::get('/order/{id}/show', 'OrderController@show');
 Route::get('/order/{id}/delete', 'OrderController@destroy');
+Route::get('/orderDtl/{id}/delete', 'OrderController@destroyDtl');
 Route::get('/order/{id}/print', 'OrderController@getPDF');
 
 # Social Lite
@@ -77,3 +80,6 @@ Route::post('/cart/storeOrder', 'MenuController@storeOrder');
 Route::get('/cart/order', 'MenuController@orderShow');
 
 Route::get('/orderDetail/{id}/show', 'MenuController@showDetail');
+
+# Feedback
+Route::post('/feedback/store', 'FeedbackController@store');

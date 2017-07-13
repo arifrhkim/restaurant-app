@@ -1,8 +1,9 @@
 TODO:
-- validasi
+- empty stock
+- refresh database
 
 ERROR:
-
+ 
 BUG & FIX:
 - Order list: edit
 - data table -> datatables.net

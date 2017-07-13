@@ -23,8 +23,8 @@
     <script>
         window.Laravel = {"csrfToken":"zwAl1w0bZeFnQRxI8eC9AFhqXrsDqfYs7Z0lnfJc"}    </script>
   </head>
-  <body onload="window.print()">
-  <!-- <body> -->
+  <!-- <body onload="window.print()"> -->
+  <body>
     <div class="panel panel-default">
         <div class="panel-heading">
           Order information

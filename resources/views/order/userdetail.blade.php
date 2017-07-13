@@ -2,8 +2,14 @@
 
 @section('content')
 
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
 <div class="form-group">
-  <a href="/order" class="btn btn-default">Kembali</a>
+  <a href="/order" class="btn btn-default">Back</a>
   <form class="pull-right">
     <a href="/order/{{$order->id}}/print" class="btn btn-success" target="_blank">Print</a>
     @if ( $order->id =='Done')
@@ -88,13 +94,18 @@
         <th>Quantity</th>
         <th>Status</th>
         <th>Subtotal</th>
+
       </tr>
     </thead>
     <tbody>
       @foreach($details as $detail)
       <tr>
         <td class="counterCell"></td>
-        <td>{{ $detail->name }}</td>
+        <td>{{ $detail->name }}
+          @if ($detail->status == 'Queued')
+          <a href="/order/{{ $detail->id }}/cancelDtl"><span class="label label-danger">cancel order</span></a>
+          @endif
+        </td>
         <td>{{ $detail->quantity }}</td>
         <td>
           @if ($detail->status == 'Queued')
@@ -103,7 +114,7 @@
             <span class="label label-info">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Served')
             <span class="label label-primary">{{ $detail->status }}</span>
-          @elseif ($detail->status == 'Done')
+          @elseif ($detail->status == 'Done' or $detail->status == 'Canceled' )
             <span class="label label-default">{{ $detail->status }}</span>
           @else
             <p>Error</p>

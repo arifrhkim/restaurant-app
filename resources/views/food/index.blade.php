@@ -2,6 +2,12 @@
 
 @section('content')
 
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
 <form class="form-inline" action="{{ url('query-food') }}" method="GET">
   <!-- <div class="form-group pull-right">
     <input type="text" class="validate form-control" name="q" placeholder="Search" value="{{ old('q') }}">

@@ -2,6 +2,12 @@
 
 @section('content')
 
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
 <div class="panel panel-default">
   <div class="panel-heading">
     Order list
@@ -35,10 +41,10 @@
                 <a href="/order/{{ $order->id }}/status" class="btn btn-info btn-xs">{{ $order->status }}</a>
               @elseif ($order->status == 'Served')
                 <a href="/order/{{ $order->id }}/status" class="btn btn-primary btn-xs">{{ $order->status }}</a>
-              @elseif ($order->status == 'Done')
+              @elseif ($order->status == 'Done' or 'Canceled' )
                 <span href="/order/{{ $order->id }}/status" class="label label-default">{{ $order->status }}</span>
               @else
-                <p>tes</p>
+                <p>Error</p>
               @endif
             </td>
             <td class="hidden-sm hidden-xs">{{ $order->created_at }}</td>

@@ -75,7 +75,7 @@ class OrderController extends Controller
         }
         $order->save();
 
-        return redirect('/order');
+        return redirect('/order')->with('status', 'Success!');
     }
 
     public function statusDetail($id)
@@ -104,7 +104,7 @@ class OrderController extends Controller
         }
         $order->save();
 
-        return back();
+        return back()->with('status', 'Success!');
     }
 
     public function show ($id)
@@ -113,11 +113,12 @@ class OrderController extends Controller
         ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
         ->where([
           ['orderID', '=', $id],
-          ['orderBy', '=', Auth::user()->id],
+          // ['orderBy', '=', Auth::user()->id],
           ['detailorders.deleted_at', '=', null],
         ])
         ->get();
         $order = Order::find($id);
+        // dd($details);
         if (Auth::user()->roles!='User') {
           return view('/order/detail', ['details' => $details, 'order' => $order]);
         } else {
@@ -128,7 +129,13 @@ class OrderController extends Controller
     public function destroy($id)
     {
       Order::find($id)->delete();
-      return redirect('order');
+      return redirect('order')->with('status', 'Deleted!');
+    }
+
+    public function destroyDtl($id)
+    {
+      detailOrder::find($id)->delete();
+      return back()->with('status', 'Deleted!');
     }
 
     public function getPDF ($id)
@@ -148,7 +155,32 @@ class OrderController extends Controller
 
       // $pdf = PDF::loadView('order.pdf', ['details' => $details, 'order' => $order]);
       // return $pdf->stream();
+    }
 
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+        if ($order->status == 'Queued') {
+            $order->status = 'Canceled';
+        } else {
+          dd('Error');
+        }
+        $order->save();
+
+        return back()->with('status', 'Success!');
+    }
+
+    public function cancelDtl($id)
+    {
+        $order = detailorder::find($id);
+        if ($order->status == 'Queued') {
+            $order->status = 'Canceled';
+        } else {
+          dd('Error');
+        }
+        $order->save();
+
+        return back()->with('status', 'Success!');
     }
 
 }

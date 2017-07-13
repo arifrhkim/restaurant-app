@@ -9,7 +9,6 @@ use App\Models\Food;
 use Image;
 use Illuminate\Support\Facades\DB;
 
-
 class FoodController extends Controller
 {
     /**
@@ -62,7 +61,7 @@ class FoodController extends Controller
         $food2->save();
     	}
 
-      return redirect('food');
+      return redirect('food')->with('status', 'Success!');
     }
 
     public function show($id)
@@ -109,12 +108,12 @@ class FoodController extends Controller
         $food2->save();
     	}
 
-      return redirect('food');
+      return redirect('food')->with('status', 'Updated!');;
     }
 
     public function destroy($id)
     {
       Food::find($id)->delete();
-      return redirect('food');
+      return redirect('food')->with('status', 'Deleted!');
     }
 }

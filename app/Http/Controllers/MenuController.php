@@ -28,7 +28,7 @@ class MenuController extends Controller
           'quantity' => $request['quantity'],
       ]);
 
-      return redirect('menu');
+      return redirect('menu')->with('status', 'Success! Added to  cart.');
     }
 
     public function indexCart ()
@@ -43,13 +43,13 @@ class MenuController extends Controller
     public function destroyCart ($id)
     {
       Cart::find($id)->delete();
-      return redirect('cart');
+      return redirect('cart')->with('status', 'Deleted!');
     }
 
     public function removeCart ()
     {
       Cart::where('orderBy', Auth::user()->id)->delete();
-      return redirect('cart');
+      return redirect('cart')->with('status', 'Cart is empty!');
     }
 
     public function storeOrder (Request $request)
@@ -88,7 +88,7 @@ class MenuController extends Controller
 
       Cart::where('orderBy', Auth::user()->id)->delete();
 
-      return redirect('cart');
+      return redirect('order')->with('status', 'Success!');
     }
 
     public function orderShow ()
