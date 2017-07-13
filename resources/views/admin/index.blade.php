@@ -9,7 +9,7 @@
 @endif
 
 <form class="form-inline" action="{{ url('query') }}" method="GET">
-  <div class="form-group pull-right">
+  <div class="form-group pull-right hidden-xs hidden-sm">
     <input type="text" class="validate form-control" name="q" placeholder="Search" value="">
     <button type="submit" class="btn btn-default">Search</button>
   </div>
@@ -27,9 +27,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th class="hidden-xs hidden-sm">Name</th>
             <th>Username</th>
-            <th>Email</th>
+            <th class="hidden-xs hidden-sm">Email</th>
             <th>Roles</th>
             <th>Action</th>
           </tr>
@@ -39,9 +39,9 @@
           <!-- <tr onclick="document.location = '/user/{{ $users->id }}/show';" style="cursor: pointer;"> -->
           <tr>
             <td class="counterCell"></td>
-            <td>{{ $users->name }}</td>
+            <td class="hidden-xs hidden-sm">{{ $users->name }}</td>
             <td>{{ $users->username }}</td>
-            <td>{{ $users->email }}</td>
+            <td class="hidden-xs hidden-sm">{{ $users->email }}</td>
             <td>{{ $users->roles }}</td>
             <td>
               <a href="user/{{ $users->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>

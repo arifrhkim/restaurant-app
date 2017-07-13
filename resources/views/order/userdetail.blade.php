@@ -86,76 +86,46 @@
     Detail Order list
   </div>
 
-  <table class="table table-bordered table-hover table-condensed" id="cartTable">
+  <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>#</th>
         <th>Food</th>
-        <th>Status</th>
-        <th>Price</th>
         <th>Quantity</th>
+        <th>Status</th>
         <th>Subtotal</th>
-        <th>Action</th>
+
       </tr>
     </thead>
     <tbody>
       @foreach($details as $detail)
       <tr>
         <td class="counterCell"></td>
-        <td>{{ $detail->name }}</td>
+        <td>{{ $detail->name }}
+          @if ($detail->status == 'Queued')
+          <a href="/order/{{ $detail->id }}/cancelDtl"><span class="label label-danger">cancel order</span></a>
+          @endif
+        </td>
+        <td>{{ $detail->quantity }}</td>
         <td>
           @if ($detail->status == 'Queued')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-warning">{{ $detail->status }}</a>
+            <span class="label label-warning">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Process')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-info">{{ $detail->status }}</a>
+            <span class="label label-info">{{ $detail->status }}</span>
           @elseif ($detail->status == 'Served')
-            <a href="/order/{{$detail->id}}/statusDetail" class="label label-primary">{{ $detail->status }}</a>
-          @elseif ($detail->status == 'Done')
+            <span class="label label-primary">{{ $detail->status }}</span>
+          @elseif ($detail->status == 'Done' or $detail->status == 'Canceled' )
             <span class="label label-default">{{ $detail->status }}</span>
           @else
             <p>Error</p>
           @endif
         </td>
-        <td>{{ $detail->price }}</td>
-        <td class="quantity">{{ $detail->quantity }}</td>
-        <td class="subtotal">{{ $detail->subtotal }}</td>
-        <td>
-          <a href="/orderDtl/{{ $detail->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
-        </td>
+        <td>{{ $detail->subtotal }}</td>
       </tr>
       @endforeach
     </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4" align="right">TOTAL</td>
-        <td id="amount"></td>
-        <td id="total" ></td>
-        <td></td>
-      </tr>
-    </tfoot>
   </table>
 
 </div>
-
-<script type="text/javascript">
-$(document).ready(function(){
-    update_amounts();
-    $('.quantity').change(function() {
-        update_amounts();
-    });
-});
-function update_amounts(){
-    var sum = 0;
-    var sums = 0;
-    $('#cartTable > tbody  > tr').each(function() {
-        var qty = $(this).find('.quantity').text();
-        var subtotal = $(this).find('.subtotal').text();
-        sum+=parseFloat(subtotal);
-        sums+=parseFloat(qty);
-    });
-     $("#total").text(sum);
-     $("#amount").text(sums);
-}
-</script>
 
 @endsection

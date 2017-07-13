@@ -24,65 +24,62 @@
                 </div>
             </div>
 
-            <!-- <form class="form-inline" action="{{ url('query') }}" method="GET">
-              <div class="form-group">
-                <input type="text" class="validate form-control" name="q" placeholder="Search" value="">
-              </div>
-              <button type="submit" class="btn btn-default">Search</button>
-            </form> -->
-
-            <!-- @if (count($user)) -->
-
-            <!-- <div class="panel panel-default">
+            @if (Auth::user()->roles != 'User')
+            <div class="panel panel-default">
               <div class="panel-heading">
-                User list
-                <a class="btn btn-default btn-xs pull-right" href="/user/create"><i class="fa fa-plus" aria-hidden="true"></i> Add user</a>
-              </div> -->
+                Customers feedback
+              </div>
 
-              <!-- <div class="panel-body"></div> -->
-
-                  <!-- <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Roles</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
+                  <table class="table">
                     <tbody>
-                      @foreach($user as $users)
+                      @foreach($feedbacks as $feedback)
                       <tr>
-                        <td class="counterCell"></td>
-                        <td>{{ $users->name }}</td>
-                        <td>{{ $users->username }}</td>
-                        <td>{{ $users->email }}</td>
-                        <td>{{ $users->roles }}</td>
-                        <td>
-                          <a href="user/{{ $users->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                          <a href="user/{{ $users->id }}/edit" class="btn btn-xs btn-info"><i class="fa fa-wrench" aria-hidden="true"></i></a>
-                          <a href="user/{{ $users->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        </td>
+                        <td></td>
+                        <td>{{ $feedback->name }}</td>
+                        <td>{{ $feedback->feedback }}</td>
+                        <td>{{ $feedback->created_at }}</td>
                       </tr>
                       @endforeach
                     </tbody>
                   </table>
-
             </div>
 
             <div class="pull-right">
-              {{ $user->links() }}
-            </div> -->
+              {{ $feedbacks->links() }}
+            </div>
+            @endif
 
-            <!-- @else -->
-               <!-- <div class="panel panel-default">
-                 <div class="panel-body">
-                   Search result for '<b>{{$query}}</b>' not found.
-                  </div>
-               </div> -->
-            <!-- @endif -->
+            <div class="panel panel-default">
+              <div class="panel-heading">Send feedback</div>
+              <div class="panel-body">
+                <form class="form-horizontal" role="form" method="POST" action="/feedback/store">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('feedback') ? ' has-error' : '' }}">
+                        <label for="feedback" class="col-md-4 control-label">Feedback</label>
+
+                        <div class="col-md-6">
+                            <textarea rows="3" id="feedback" type="text" class="form-control" name="feedback" value="{{ old('description') }}" required></textarea>
+
+                            @if ($errors->has('feedback'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('feedback') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+              </div>
+            </div>
 
         </div>
     </div>

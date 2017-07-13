@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Food;
+use Image;
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -34,16 +36,32 @@ class FoodController extends Controller
     {
       $this->validate($request, [
         'name' => 'required',
+        'description' => 'required',
         'price' => 'required',
         'status' => 'required',
       ]);
 
-      Food::create([
+      $food = Food::create([
           'name' => $request['name'],
+          'description' => $request['description'],
           'price' => $request['price'],
           'status' => $request['status'],
+          'foodPic' => $request['foodPic'],
       ]);
-      return redirect('food');
+
+      $insertedId = $food->id;
+
+      if($request->hasFile('foodPic')){
+    		$foodPic = $request->file('foodPic');
+    		$filename = time() . '.' . $foodPic->getClientOriginalExtension();
+    		Image::make($foodPic)->resize(300, 300)->save( public_path('/uploads/foods/' . $filename ) );
+
+    		$food2 = Food::find($insertedId);
+    		$food2->foodPic = $filename;
+        $food2->save();
+    	}
+
+      return redirect('food')->with('status', 'Success!');
     }
 
     public function show($id)
@@ -65,21 +83,37 @@ class FoodController extends Controller
     {
       $this->validate($request, [
         'name' => 'required',
+        'description' => 'required',
         'price' => 'required',
         'status' => 'required',
       ]);
 
       $foods = Food::find($id);
       $foods->name = $request->name;
+      $foods->description = $request->description;
       $foods->price = $request->price;
       $foods->status = $request->status;
+      $foods->foodPic = $request->foodPic;
       $foods->save();
-      return redirect('food');
+
+      $insertedId = $foods->id;
+
+      if($request->hasFile('foodPic')){
+    		$foodPic = $request->file('foodPic');
+    		$filename = time() . '.' . $foodPic->getClientOriginalExtension();
+    		Image::make($foodPic)->resize(300, 300)->save( public_path('/uploads/foods/' . $filename ) );
+
+    		$food2 = Food::find($insertedId);
+    		$food2->foodPic = $filename;
+        $food2->save();
+    	}
+
+      return redirect('food')->with('status', 'Updated!');;
     }
 
     public function destroy($id)
     {
       Food::find($id)->delete();
-      return redirect('food');
+      return redirect('food')->with('status', 'Deleted!');
     }
 }

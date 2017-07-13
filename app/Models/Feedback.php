@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class detailOrder extends Model
+class Feedback extends Model
 {
-    public $table = "detailorders";
+    public $table = "feedbacks";
     //
     use SoftDeletes;
 
@@ -17,7 +17,7 @@ class detailOrder extends Model
      * @var array
      */
     protected $fillable = [
-        'orderID', 'orderBy', 'foodID', 'quantity', 'status', 'subtotal',
+        'customerID', 'feedback',
     ];
 
     /**

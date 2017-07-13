@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class detailOrder extends Model
+class Cart extends Model
 {
-    public $table = "detailorders";
-    //
-    use SoftDeletes;
 
+    //
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'orderID', 'orderBy', 'foodID', 'quantity', 'status', 'subtotal',
+        'orderBy', 'foodID', 'quantity',
     ];
-
     /**
      * The attributes that should be mutated to dates.
      *

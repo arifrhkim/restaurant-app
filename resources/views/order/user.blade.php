@@ -17,9 +17,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th class="hidden-xs hidden-sm">Order ID</th>
+            <th>Order ID</th>
             <th>Table</th>
-            <th class="hidden-xs hidden-sm">Order By</th>
             <th>Order Name</th>
             <th>Status</th>
             <th class="hidden-sm hidden-xs">Date</th>
@@ -30,19 +29,18 @@
           @foreach($orders as $order)
           <tr>
             <td class="counterCell"></td>
-            <td class="hidden-xs hidden-sm">{{ $order->id }}</td>
+            <td>{{ $order->id }}</td>
             <td>{{ $order->tableID }}</td>
-            <td class="hidden-xs hidden-sm">{{ $order->name }} ({{ $order->roles }})</td>
             <td>{{ $order->nameOrder }}</td>
             <td>
               @if ($order->status == 'Queued')
-                <a href="/order/{{ $order->id }}/status" class="btn btn-warning btn-xs">{{ $order->status }}</a>
+                <span class="label label-warning">{{ $order->status }}</span>
               @elseif ($order->status == 'Process')
-                <a href="/order/{{ $order->id }}/status" class="btn btn-info btn-xs">{{ $order->status }}</a>
+                <span class="label label-info">{{ $order->status }}</span>
               @elseif ($order->status == 'Served')
-                <a href="/order/{{ $order->id }}/status" class="btn btn-primary btn-xs">{{ $order->status }}</a>
-              @elseif ($order->status == 'Done' or 'Canceled' )
-                <span href="/order/{{ $order->id }}/status" class="label label-default">{{ $order->status }}</span>
+                <span class="label label-primary">{{ $order->status }}</span>
+              @elseif ($order->status == 'Done' or $order->status == 'Canceled')
+                <span class="label label-default">{{ $order->status }}</span>
               @else
                 <p>Error</p>
               @endif
@@ -50,8 +48,9 @@
             <td class="hidden-sm hidden-xs">{{ $order->created_at }}</td>
             <td>
               <a href="/order/{{ $order->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-              <!-- <a href="/order/{{ $order->id }}/edit" class="btn btn-xs btn-info"><i class="fa fa-wrench" aria-hidden="true"></i></a> -->
-              <a href="/order/{{ $order->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              @if ( $order->status == 'Queued' )
+              <a href="/order/{{ $order->id }}/cancel" class="btn btn-xs btn-danger">Cancel Order</a>
+              @endif
             </td>
           </tr>
           @endforeach
