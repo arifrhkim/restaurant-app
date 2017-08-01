@@ -1,7 +1,22 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-
+          @if (Auth::check())
+            @if (Auth::user()->roles == 'Waitress' or Auth::user()->roles == 'Chef')
+              <a href="/home" class="hidden-md hidden-lg hidden-sm" style="position:relatif;margin-right:50px;">
+                <span class="label label-danger pull-right">
+                  <div class="notif"></div>
+                </span>
+              </a>
+            @endif
+            @if (Auth::user()->roles == 'Waitress')
+              <a href="/home" class="hidden-md hidden-lg hidden-sm" style="position:relatif;margin-right:50px;">
+                <span class="label label-warning pull-right">
+                  <div class="notif-cooked"></div>
+                </span>
+              </a>
+            @endif
+          @endif
             <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
@@ -18,7 +33,7 @@
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
-            <ul class="nav navbar-nav hidden-md hidden-lg">
+            <ul class="nav navbar-nav hidden-md hidden-lg hidden-sm">
                 <!-- &nbsp; -->
                 @if (Auth::check())
                   <li role="presentation"><a href="/home">Home</a></li>
@@ -59,6 +74,19 @@
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @else
+                <!-- <i class="fa fa-bell" aria-hidden="true"></i> -->
+                    @if (Auth::user()->roles == 'Waitress' or Auth::user()->roles == 'Chef')
+                      <li class="hidden-xs"><a href="/home" style="margin-right:30px;"><span class="label label-danger pull-right">
+                        <div class="notif"></div>
+                      </span>
+                      </a></li>
+                    @endif
+                    @if (Auth::user()->roles == 'Waitress')
+                      <li class="hidden-xs"><a href="/home" style="right:50px;"><span class="label label-warning pull-right">
+                        <div class="notif-cooked"></div>
+                      </span>
+                      </a></li>
+                    @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                           <img src="/uploads/avatars/{{ Auth::user()->avatar }}" class="avatar-top">

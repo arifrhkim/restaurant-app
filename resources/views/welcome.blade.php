@@ -1,107 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+  <title>Restaurant-app</title>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
 
-        <title>Laravel</title>
+<a href="#" onclick="myFunction()">tes</a>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCt46FNfV-FXAiJPRzIGUMAPoJCSwRPFrU",
+    authDomain: "restaurant-748ae.firebaseapp.com",
+    databaseURL: "https://restaurant-748ae.firebaseio.com",
+    projectId: "restaurant-748ae",
+    storageBucket: "restaurant-748ae.appspot.com",
+    messagingSenderId: "248503638694"
+  };
+  firebase.initializeApp(config);
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+  const messaging = firebase.messaging();
 
-            .full-height {
-                height: 100vh;
-            }
+  messaging.requestPermission()
+  .then(function() {
+    console.log('Notification permission granted.');
+    return messaging.getToken();
+  })
+  .then(function(token){
+    console.log(token);
+  })
+  .catch(function(err) {
+    console.log('Unable to get permission to notify.', err);
+  });
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+  messaging.onMessage(function(payload) {
+    console.log('onMessage: ', payload)
+  });
 
-            .position-ref {
-                position: relative;
-            }
+</script>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md" id="d-d">
-
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-
-        <script>
-          var countDownDate = new Date("Jul 24, 2017 00:00:00").getTime();
-          var now = new Date().getTime();
-          var distance = countDownDate - now;
-          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          document.getElementById("d-d").innerHTML = "H - " + days;
-          if (distance < 0) {
-            document.getElementById("d-d").innerHTML = "EXPIRED";
-          }
-        </script>
-
-    </body>
+</body>
 </html>

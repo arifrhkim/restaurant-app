@@ -44,7 +44,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Food Description</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -62,7 +62,7 @@
                   <label for="quantity" class="col-xs-6 col-md-3 control-label">Quantity</label>
 
                   <div class="col-xs-6 col-md-4">
-                      <input id="quantity" type="text" class="form-control" name="quantity" value="{{ old('quantity') }}" required autofocus>
+                      <input id="quantity" type="number" min="1" class="form-control" name="quantity" value="1" required autofocus>
 
                       @if ($errors->has('quantity'))
                           <span class="help-block">

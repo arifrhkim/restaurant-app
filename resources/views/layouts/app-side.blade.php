@@ -8,7 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Rest-app') }}</title>
+
+    <link rel="icon" type="image/png" href="https://ta.artomodular.com/icon.png">
+
+    <link rel="manifest" href="/manifest.json">
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -48,6 +52,20 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+
+    <script>
+    var refreshId = setInterval(function()
+    {
+    $('.notif').load('{{ url('/test') }}');
+    }, 1000);
+    </script>
+
+    <script>
+    var refreshId2 = setInterval(function()
+    {
+    $('.notif-cooked').load('{{ url('/testcooked') }}');
+    }, 1000);
+    </script>
 
 </body>
 </html>

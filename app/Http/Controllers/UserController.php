@@ -85,9 +85,9 @@ class UserController extends Controller
       return redirect('home');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-      User::find($id)->delete();
+      User::find($request->id)->delete();
       return redirect('user');
     }
 

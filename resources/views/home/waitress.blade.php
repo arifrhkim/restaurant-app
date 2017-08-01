@@ -1,16 +1,6 @@
-@extends('layouts.app-side')
-
-@section('content')
-
-@if (session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-@endif
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    Order list
+    Waiting list
   </div>
 
       <table class="table table-bordered table-hover table-condensed" id="response">
@@ -65,40 +55,102 @@
   {{ $orders->links() }}
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete?
-        <form action="order/delete">
-          <input type="text" name="id" class="id" hidden>
-          <input id="delete" type="submit" value="Submit" hidden>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('delete').click()">Delete</button>
-      </div>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Cooked list
   </div>
+
+  <table class="table table-bordered table-hover table-condensed" id="cartTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th>Table</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($cookeds as $cooked)
+      <tr>
+        <td class="counterCell"></td>
+        <td>{{ $cooked->name }}</td>
+        <td>{{ $cooked->quantity }}</td>
+        <td>{{ $cooked->tableID }}</td>
+        <td><a href="/order/{{$cooked->id}}/statusDetail" class="btn btn-success btn-xs">{{ $cooked->status }}</a></td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>
 
-<script type="text/javascript">
+<div class="pull-right">
+  {{ $cookeds->links() }}
+</div>
 
-  // var refreshId = setInterval(function() {
-  // $('#response').load('{{ url('/orders') }}');
-  // }, 1000);
+<!-- <div class="panel panel-default">
+  <div class="panel-heading">
+    Process list
+  </div>
 
-  $(document).on("click", ".btn-modal", function () {
-     var myMenuId = $(this).data('id');
-     $(".modal-body .id").val( myMenuId );
-  });
+  <table class="table table-bordered table-hover table-condensed" id="cartTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th>Table</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($process as $proces)
+      <tr>
+        <td class="counterCell"></td>
+        <td>{{ $proces->name }}</td>
+        <td>{{ $proces->quantity }}</td>
+        <td>{{ $proces->tableID }}</td>
+        <td><span class="label label-info">{{ $proces->status }}</span></td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
 
+<div class="pull-right">
+  {{ $process->links() }}
+</div>
 
-</script>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Queued list
+  </div>
 
-@endsection
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th>Table</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($queueds as $queued)
+      <tr>
+        <td class="counterCell"></td>
+        <td>{{ $queued->name }}</td>
+        <td>{{ $queued->quantity }}</td>
+        <td>{{ $queued->tableID }}</td>
+        <td><span class="label label-warning">{{ $queued->status }}</a></td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+
+</div>
+
+<div class="pull-right">
+  {{ $process->links() }}
+</div> -->

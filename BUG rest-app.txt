@@ -1,9 +1,14 @@
 TODO:
-- empty stock
-- refresh database
+- login code (URL dynamic)
+- proses status
+
+- home pelanggan
+- edit pesanan
+- orders status button action
+- estimasi waktu
 
 ERROR:
- 
+
 BUG & FIX:
 - Order list: edit
 - data table -> datatables.net
@@ -19,5 +24,7 @@ STRANGE:
 - remember me ?
 - form won't autofocus ?
 
-AFTER:
-- Testing
+QUESTION:
+- Email path ?
+- bycript
+- physicalweb work ?

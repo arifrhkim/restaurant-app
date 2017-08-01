@@ -40,9 +40,9 @@ class MenuController extends Controller
       return view('/cart/index', ['cart' => $cart]);
     }
 
-    public function destroyCart ($id)
+    public function destroyCart (Request $request)
     {
-      Cart::find($id)->delete();
+      Cart::find($request->id)->delete();
       return redirect('cart')->with('status', 'Deleted!');
     }
 
@@ -67,7 +67,6 @@ class MenuController extends Controller
       ]);
 
       $insertedId = $order->id;
-      // dd($insertedId);
 
       $carts = DB::table('foods')
         ->join('carts', 'foods.id', '=', 'carts.foodID')

@@ -45,7 +45,7 @@
             <td>
               <a href="/food/{{ $foods->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
               <a href="/food/{{ $foods->id }}/edit" class="btn btn-xs btn-info"><i class="fa fa-wrench" aria-hidden="true"></i></a>
-              <a href="/food/{{ $foods->id }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a href="#" class="btn btn-xs btn-danger btn-modal" data-toggle="modal" data-id="{{ $foods->id }}" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>
           @endforeach
@@ -65,5 +65,34 @@
       </div>
    </div>
 @endif
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete?
+        <form action="food/delete">
+          <input type="text" name="id" class="id" hidden>
+          <input id="delete" type="submit" value="Submit" hidden>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('delete').click()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).on("click", ".btn-modal", function () {
+     var myMenuId = $(this).data('id');
+     $(".modal-body .id").val( myMenuId );
+  });
+</script>
 
 @endsection

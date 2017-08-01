@@ -68,6 +68,8 @@
                 </div>
             </div>
 
+            @if (Auth::user()->roles == 'Admin')
+
             <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Roles</label>
 
@@ -83,11 +85,10 @@
                 </div>
             </div>
 
+            @endif
+
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
-                    <!-- <button type="submit" value="edit" class="btn btn-primary">
-                        Register
-                    </button> -->
                     <div class=" pull-right">
                       <a class="btn btn-primary" href="edit"><i class="fa fa-wrench" aria-hidden="true"></i> Edit</a>
                       @if ( $users->id == Auth::user()->id)

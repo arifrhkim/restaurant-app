@@ -49,13 +49,30 @@
                 </div>
             </div>
 
-            @if ( $users->id != Auth::user()->id)
+            @if (Auth::user()->roles == 'Admin')
 
             <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Roles</label>
 
                 <div class="col-md-6">
                     <select class="form-control" name="roles">
+                      <option value="{{ $users->roles }}">{{ $users->roles }}</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Cashier">Cashier</option>
+                      <option value="Chef">Chef</option>
+                      <option value="Waitress">Waitress</option>
+                      <option value="User">User</option>
+                    </select>
+                </div>
+            </div>
+
+            @else
+
+            <div class="form-group{{ $errors->has('roles') ? ' has-error' : '' }}" hidden>
+                <label class="col-md-4 control-label">Roles</label>
+
+                <div class="col-md-6">
+                    <select class="form-control" name="roles" >
                       <option value="{{ $users->roles }}">{{ $users->roles }}</option>
                       <option value="Admin">Admin</option>
                       <option value="Cashier">Cashier</option>

@@ -111,9 +111,9 @@ class FoodController extends Controller
       return redirect('food')->with('status', 'Updated!');;
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-      Food::find($id)->delete();
+      Food::find($request->id)->delete();
       return redirect('food')->with('status', 'Deleted!');
     }
 }

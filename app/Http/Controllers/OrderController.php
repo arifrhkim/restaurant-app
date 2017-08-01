@@ -49,10 +49,32 @@ class OrderController extends Controller
         }
     }
 
+    public function indeks()
+    {
+        $orders=DB::table('users')
+          ->join('orders', 'orders.customerID', '=', 'users.id')
+          ->where('orders.deleted_at', '=', null )
+          ->paginate(10);
+          return ['orders'=>$orders];
+          // return dd($orders);
+          // return view('/order/index', ['orders'=>$orders]);
+    }
+
     public function status($id)
     {
         $order = Order::find($id);
+        $detailorder = DB::table('detailorders')
+          ->where([
+            ['orderID', '=', $id],
+            ['detailorders.deleted_at', '=', null],
+          ]);
+
         switch ($order->status) {
+          case 'Waiting':
+            $detailorder->update(['status' => 'Queued']);
+            $order->status = 'Queued';
+            break;
+
           case 'Queued':
             $order->status = 'Process';
             break;
@@ -63,6 +85,10 @@ class OrderController extends Controller
 
           case 'Served':
             $order->status = 'Done';
+            break;
+
+          case 'Request':
+            $order->status = 'Canceled';
             break;
 
           case 'Done':
@@ -75,7 +101,8 @@ class OrderController extends Controller
         }
         $order->save();
 
-        return redirect('/order')->with('status', 'Success!');
+        // return redirect('/order')->with('status', 'Success!');
+        return back()->with('status', 'Success!');
     }
 
     public function statusDetail($id)
@@ -87,6 +114,10 @@ class OrderController extends Controller
             break;
 
           case 'Process':
+            $order->status = 'Cooked';
+            break;
+
+          case 'Cooked':
             $order->status = 'Served';
             break;
 
@@ -94,8 +125,8 @@ class OrderController extends Controller
             $order->status = 'Done';
             break;
 
-          case 'Done':
-            // dd('Statusnya sudah Done');
+          case 'Request':
+            $order->status = 'Canceled';
             break;
 
           default:
@@ -126,42 +157,79 @@ class OrderController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function edit ($id)
     {
-      Order::find($id)->delete();
+      $order = Order::find($id);
+
+      return view('/order/editdetail', ['order' => $order]);
+    }
+
+    public function update (Request $request)
+    {
+      $this->validate($request, [
+        'nameOrder' => 'required',
+        'tableID' => 'required',
+      ]);
+
+      $order = Order::find($request->id);
+      $order->nameOrder = $request->nameOrder;
+      $order->tableID = $request->tableID;
+      $order->save();
+
+      return redirect('/home');
+    }
+
+    public function destroy(Request $request)
+    {
+      Order::find($request->id)->delete();
       return redirect('order')->with('status', 'Deleted!');
     }
 
-    public function destroyDtl($id)
+    public function destroyDtl(Request $request)
     {
-      detailOrder::find($id)->delete();
+      detailOrder::find($request->id)->delete();
       return back()->with('status', 'Deleted!');
     }
 
     public function getPDF ($id)
     {
       // dd($id);
-      $details = DB::table('foods')
-        ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
-        ->where([
-          ['orderID', '=', $id],
-          ['orderBy', '=', Auth::user()->id],
-          ['detailorders.deleted_at', '=', null],
-        ])
-        ->get();
-      $order = Order::find($id);
+      if (Auth::user()->roles== 'User') {
+        $details = DB::table('foods')
+          ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
+          ->where([
+            ['orderID', '=', $id],
+            ['detailorders.status', '=', 'Served'],
+            ['orderBy', '=', Auth::user()->id ],
+            ['detailorders.deleted_at', '=', null],
+          ])
+          ->get();
+      } else {
+        $details = DB::table('foods')
+          ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
+          ->where([
+            ['orderID', '=', $id],
+            ['detailorders.status', '=', 'Served'],
+            // ['orderBy', '=', Auth::user()->id ],
+            ['detailorders.deleted_at', '=', null],
+          ])
+          ->get();
+          // dd($details);
+      }
 
+      $order = Order::find($id);
+      // dd($details);
       return view('order.pdf', ['details' => $details, 'order' => $order]);
 
       // $pdf = PDF::loadView('order.pdf', ['details' => $details, 'order' => $order]);
       // return $pdf->stream();
     }
 
-    public function cancel($id)
+    public function cancel(Request $request)
     {
-        $order = Order::find($id);
+        $order = Order::find($request->id);
         if ($order->status == 'Queued') {
-            $order->status = 'Canceled';
+            $order->status = 'Request';
         } else {
           dd('Error');
         }
@@ -170,11 +238,11 @@ class OrderController extends Controller
         return back()->with('status', 'Success!');
     }
 
-    public function cancelDtl($id)
+    public function cancelDtl(Request $request)
     {
-        $order = detailorder::find($id);
+        $order = detailorder::find($request->id);
         if ($order->status == 'Queued') {
-            $order->status = 'Canceled';
+            $order->status = 'Request';
         } else {
           dd('Error');
         }

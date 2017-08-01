@@ -32,49 +32,35 @@
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+  <a id="demo_button" href="#" class="btn btn-default">View Demo</a>
 
-    <!-- Page Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <h1>The Big Picture</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, iusto, unde, sunt incidunt id sapiente rerum soluta voluptate harum veniam fuga odit ea pariatur vel eaque sint sequi tenetur eligendi.</p>
-            </div>
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->
+  <script type="text/javascript">
+  function demo() {
+    Push.create('Hello World!');
+    // Push.create('Hello world!', {
+    //     body: 'How\'s it hangin\'?',
+    //     // icon: '/images/icon.png',
+    //     link: '/#',
+    //     timeout: 4000,
+    //     onClick: function () {
+    //         console.log("Fired!");
+    //         window.focus();
+    //         this.close();
+    //     },
+    //     vibrate: [200, 100, 200, 100, 200, 100, 200]
+    // });
+  }
+
+  $(document).ready(function() {
+    $("#demo_button").click(demo);
+  });
+  </script>
+
+  <script src='https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js' type="text/javascript"></script>
+
+  <script src='https://www.gstatic.com/firebasejs/4.1.2/firebase-messaging.js' type="text/javascript"></script>
+
+  <script src='/scripts/push.min.js' type="text/javascript"></script>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

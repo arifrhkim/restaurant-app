@@ -17,6 +17,9 @@ Route::get('/', function () {
   // return view('landing');
 });
 
+Route::get('/test', 'HomeController@test');
+Route::get('/testcooked', 'HomeController@testcooked');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
@@ -30,7 +33,7 @@ Route::post('/user/store', 'UserController@store');
 Route::get('/user/{id}/show', 'UserController@show');
 Route::get('/user/{id}/edit', 'UserController@edit');
 Route::put('/user/{id}', 'UserController@update');
-Route::get('/user/{id}/delete', 'UserController@destroy');
+Route::get('/user/delete', 'UserController@destroy');
 Route::get('/user/{id}/setting', function () {
     return view('/admin/setting');
 });
@@ -53,17 +56,20 @@ Route::post('/food/store', 'FoodController@store');
 Route::get('/food/{id}/show', 'FoodController@show');
 Route::get('/food/{id}/edit', 'FoodController@edit');
 Route::put('/food/{id}', 'FoodController@update');
-Route::get('/food/{id}/delete', 'FoodController@destroy');
+Route::get('/food/delete', 'FoodController@destroy');
 
 # Order
 Route::get('/order', 'OrderController@index');
+// Route::get('/orders', 'OrderController@indeks');
 Route::get('/order/{id}/status', 'OrderController@status');
-Route::get('/order/{id}/cancel', 'OrderController@cancel');
-Route::get('/order/{id}/cancelDtl', 'OrderController@cancelDtl');
+Route::get('/order/cancel', 'OrderController@cancel');
+Route::get('/order/cancelDtl', 'OrderController@cancelDtl');
 Route::get('/order/{id}/statusDetail', 'OrderController@statusDetail');
 Route::get('/order/{id}/show', 'OrderController@show');
-Route::get('/order/{id}/delete', 'OrderController@destroy');
-Route::get('/orderDtl/{id}/delete', 'OrderController@destroyDtl');
+Route::get('/order/{id}/edit', 'OrderController@edit');
+Route::post('/order/{id}', 'OrderController@update');
+Route::get('/order/delete', 'OrderController@destroy');
+Route::get('/orderDtl/delete', 'OrderController@destroyDtl');
 Route::get('/order/{id}/print', 'OrderController@getPDF');
 
 # Social Lite
@@ -74,7 +80,7 @@ Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCa
 Route::get('/menu', 'MenuController@indexMenu');
 Route::get('/cart/store', 'MenuController@storeCart');
 Route::get('/cart', 'MenuController@indexCart');
-Route::get('/cart/{id}/delete', 'MenuController@destroyCart');
+Route::get('/cart/delete', 'MenuController@destroyCart');
 Route::get('/cart/destroy', 'MenuController@removeCart');
 Route::post('/cart/storeOrder', 'MenuController@storeOrder');
 Route::get('/cart/order', 'MenuController@orderShow');

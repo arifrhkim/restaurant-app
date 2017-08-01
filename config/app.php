@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Family Resto', 
 
     /*
     |--------------------------------------------------------------------------
@@ -181,6 +181,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        // NotificationChannels\Gcm\GcmServiceProvider::class,
 
     ],
 
@@ -233,6 +234,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'gcm' => NotificationChannels\Gcm\GcmServiceProvider::class,
 
     ],
 
