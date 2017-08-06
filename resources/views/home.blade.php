@@ -16,13 +16,13 @@
               </div>
           @endif
 
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
                     Welcome {{ Auth::user()->name }}, You are logged in as {{ Auth::user()->roles }} !
                 </div>
-            </div>
+            </div> -->
 
             @if (Auth::user()->roles == 'Waitress')
               @include('home.waitress')
@@ -38,6 +38,10 @@
 
             @if (Auth::user()->roles == 'User')
               @include('home.user')
+            @endif
+
+            @if (Auth::user()->roles == 'Cashier')
+              @include('home.cashier')
             @endif
 
         </div>

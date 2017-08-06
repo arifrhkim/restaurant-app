@@ -1,4 +1,13 @@
 <div class="panel panel-default">
+  <div class="panel-heading">Today's Promo</div>
+  <div class="panel-body">
+    <a href="/menu">
+      <img src="/uploads/foods/promo.jpg" class="img-responsive" alt="Today's promo">
+    </a>
+  </div>
+</div>
+
+<div class="panel panel-default">
   <div class="panel-heading">Send feedback</div>
   <div class="panel-body">
     <form class="form-horizontal" role="form" method="POST" action="/feedback/store">

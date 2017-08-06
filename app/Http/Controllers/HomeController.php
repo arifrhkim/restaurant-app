@@ -39,6 +39,14 @@ class HomeController extends Controller
           ])
           ->paginate(10);
 
+        $ordersprocess = DB::table('users')
+          ->join('orders', 'orders.customerID', '=', 'users.id')
+          ->where([
+            ['orders.status', '=', 'Process'],
+            ['orders.deleted_at', '=', null],
+          ])
+          ->paginate(10);
+
         $cookeds = DB::table('foods')
           ->join('detailorders', 'foods.id', '=', 'detailorders.foodID')
           ->join('orders', 'detailorders.orderID', '=', 'orders.id')
@@ -66,7 +74,15 @@ class HomeController extends Controller
           ])->select('detailorders.*', 'foods.name as name', 'orders.tableID as tableID')
           ->paginate(10);
 
-        return view('home', ['feedbacks'=>$feedbacks, 'orders'=>$orders, 'process'=>$process, 'queueds'=>$queueds, 'cookeds'=>$cookeds ]);
+        $serveds = DB::table('users')
+          ->join('orders', 'orders.customerID', '=', 'users.id')
+          ->where([
+            ['orders.status', '=', 'Served'],
+            ['orders.deleted_at', '=', null],
+          ])
+          ->paginate(10);
+
+        return view('home', ['feedbacks'=>$feedbacks, 'orders'=>$orders, 'ordersprocess'=>$ordersprocess, 'process'=>$process, 'queueds'=>$queueds, 'cookeds'=>$cookeds, 'serveds'=>$serveds ]);
     }
 
     public function test () {

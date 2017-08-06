@@ -9,7 +9,7 @@
 @endif
 
 <div class="form-group">
-  <a href="/order" class="btn btn-default">Back</a>
+  <a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
   <form class="pull-right">
     @if (Auth::user()->roles == 'Chef')
     <a href="/order/{{$order->id}}/print" class="btn btn-success" target="_blank">Print</a>

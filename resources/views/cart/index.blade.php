@@ -73,7 +73,7 @@
             <label for="tableID" class="col-md-4 control-label">Table</label>
 
             <div class="col-md-6">
-                <input id="tableID" type="text" class="form-control" name="tableID" value="{{ old('tableID') }}" required>
+                <input id="tableID" type="number" class="form-control" name="tableID" value="{{ old('tableID') }}" required>
 
                 @if ($errors->has('tableID'))
                     <span class="help-block">

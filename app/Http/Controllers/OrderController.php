@@ -108,8 +108,12 @@ class OrderController extends Controller
     public function statusDetail($id)
     {
         $order = detailorder::find($id);
+        $ordr = Order::find($order->orderID);
+
         switch ($order->status) {
           case 'Queued':
+            $ordr->status = 'Process';
+            $ordr->save();
             $order->status = 'Process';
             break;
 

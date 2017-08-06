@@ -88,69 +88,47 @@
   {{ $cookeds->links() }}
 </div>
 
-<!-- <div class="panel panel-default">
+<div class="panel panel-default">
   <div class="panel-heading">
     Process list
   </div>
 
-  <table class="table table-bordered table-hover table-condensed" id="cartTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Food</th>
-        <th>Quantity</th>
-        <th>Table</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($process as $proces)
-      <tr>
-        <td class="counterCell"></td>
-        <td>{{ $proces->name }}</td>
-        <td>{{ $proces->quantity }}</td>
-        <td>{{ $proces->tableID }}</td>
-        <td><span class="label label-info">{{ $proces->status }}</span></td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-</div>
-
-<div class="pull-right">
-  {{ $process->links() }}
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Queued list
-  </div>
-
-  <table class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Food</th>
-        <th>Quantity</th>
-        <th>Table</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($queueds as $queued)
-      <tr>
-        <td class="counterCell"></td>
-        <td>{{ $queued->name }}</td>
-        <td>{{ $queued->quantity }}</td>
-        <td>{{ $queued->tableID }}</td>
-        <td><span class="label label-warning">{{ $queued->status }}</a></td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
+      <table class="table table-bordered table-hover table-condensed" id="response">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="hidden-xs hidden-sm">Order ID</th>
+            <th>Table</th>
+            <th class="hidden-xs hidden-sm">Order By</th>
+            <th>Order Name</th>
+            <th>Status</th>
+            <th class="hidden-sm hidden-xs">Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($ordersprocess as $orderprocess)
+          <tr>
+            <td class="counterCell"></td>
+            <td class="hidden-xs hidden-sm">{{ $orderprocess->id }}</td>
+            <td>{{ $orderprocess->tableID }}</td>
+            <td class="hidden-xs hidden-sm">{{ $orderprocess->name }} ({{ $orderprocess->roles }})</td>
+            <td>{{ $orderprocess->nameOrder }}</td>
+            <td>
+                <a href="/order/{{ $orderprocess->id }}/status" class="btn btn-info btn-xs">{{ $orderprocess->status }}</a>
+            </td>
+            <td class="hidden-sm hidden-xs">{{ $orderprocess->created_at }}</td>
+            <td>
+              <a href="/order/{{ $orderprocess->id }}/show" class="btn btn-xs btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+              <a href="#" class="btn btn-xs btn-danger btn-modal" data-toggle="modal" data-id="{{ $orderprocess->id }}" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
 
 </div>
 
 <div class="pull-right">
-  {{ $process->links() }}
-</div> -->
+  {{ $ordersprocess->links() }}
+</div>

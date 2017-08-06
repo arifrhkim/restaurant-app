@@ -1,11 +1,12 @@
 TODO:
 - login code (URL dynamic)
-- proses status
+k - proses status
+- estimasi waktu
 
-- home pelanggan
+k - home pelanggan
 - edit pesanan
 - orders status button action
-- estimasi waktu
+
 
 ERROR:
 
